@@ -15,6 +15,8 @@ https://www.udemy.com/codeigniter-framework/learn/v4/content
 
 -
 Changelog:
+* added getAllBooks method
+* added getBooksById method
 
 -->
 
@@ -28,13 +30,31 @@ class Bookstore_model extends CI_Model {
 		$this->load->database();
 	}
 	
-	//api call - get all books
+	//connect to database - get all books
 	public function get_all_books() {
+		$this->db->select('*');
+		$this->db->from('books');
+		$this->db->join('author', 'author.id = books.author_id');
+		$this->db->join('genre', 'genre.id = books.genre_id');
 		
+		$query = $this->db->get();
+		$data['Books'] = $query->result();
+		
+		echo json_encode($data);
 	}
 	
-	//API call - get a book record by id
-    public function get_book_by_id(){ 
+	//connect to database - get a book record by id
+    public function get_book_by_id($id){ 
+
+	    $this->db->select('*');
+	    $this->db->from('books');
+		$this->db->join('author', 'author.id = books.author_id');
+		$this->db->join('genre', 'genre.id = books.genre_id');
+	    $this->db->where('book_id', $id);
+
+	    $query = $this->db->get();
+		$data['Book'] = $query->result();
 		
-   }
+		echo json_encode($data);
+    }
 }
