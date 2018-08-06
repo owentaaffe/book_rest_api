@@ -15,7 +15,9 @@ https://www.udemy.com/codeigniter-framework/learn/v4/content
 
 -
 Changelog:
-
+* addded getBooks method
+* added getBookById method
+* added index method
 -->
 
 <?php
@@ -32,16 +34,21 @@ class Api extends CI_Controller {
 	
 	//API -  Get All books
     public function get_all_books() {
-		
         
+        $result = $this->Bookstore_model->get_all_books();
     }
 	
 	//API - Get a Book by id
     public function get_book_by_id() {
-		
+
+        $id = $this->input->get('book_id');
+
+        $result = $this->Bookstore_model->get_book_by_id($id);
     } 
 
 	public function index() {
+		echo  ('<a href="http://localhost:8080/ZSWWD_A1/index.php/api/get_all_books">Get all Books</a> <hr>');
 		
+		echo  ('<a href="http://localhost:8080/ZSWWD_A1/index.php/api/get_book_by_id?book_id=1">Get Book by ID</a> ');
 	}
 }
